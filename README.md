@@ -1,202 +1,87 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#define MAX_CONTACTS 100
-#define MAX_NAME_LEN 50
-#define MAX_PHONE_LEN 15
-#define MAX_EMAIL_LEN 50
-#define FILE_NAME "contacts.txt"
+  
+ Algorithm:
 
-// Define a structure to store contact information
-typedef struct {
-    char name[MAX_NAME_LEN];
-    char phone[MAX_PHONE_LEN];
-    char email[MAX_EMAIL_LEN];
-} Contact;
+1. **Initialize System**:
 
-// Function declarations
-void addContact(Contact contacts[], int *count);
-void viewContacts(Contact contacts[], int count);
-void editContact(Contact contacts[], int count);
-void deleteContact(Contact contacts[], int *count);
-void saveContactsToFile(Contact contacts[], int count);
-void loadContactsFromFile(Contact contacts[], int *count);
+   * Create a database or file to store contacts.
 
-int main() {
-    Contact contacts[MAX_CONTACTS];
-    int count = 0;
-    int choice;
+2. **Add Contact**:
 
-    // Load contacts from file on program startup
-    loadContactsFromFile(contacts, &count);
+   * Input contact details (Name, Phone, Email, Address).
+   * Validate inputs (e.g., phone number format, email format).
+   * Store contact in the database.
 
-    do {
-        printf("\nContact Management System\n");
-        printf("1. Add Contact\n");
-        printf("2. View Contacts\n");
-        printf("3. Edit Contact\n");
-        printf("4. Delete Contact\n");
-        printf("5. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-        getchar();  // Consume the newline character left by scanf
+3. **View Contact**:
 
-        switch (choice) {
-            case 1:
-                addContact(contacts, &count);
-                break;
-            case 2:
-                viewContacts(contacts, count);
-                break;
-            case 3:
-                editContact(contacts, count);
-                break;
-            case 4:
-                deleteContact(contacts, &count);
-                break;
-            case 5:
-                saveContactsToFile(contacts, count);
-                printf("Exiting program...\n");
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
-        }
-    } while (choice != 5);
+   * Retrieve and display all contacts.
+   * Optionally, provide search functionality by name, phone, or email.
 
-    return 0;
-}
+4. **Edit Contact**:
 
-// Function to add a new contact
-void addContact(Contact contacts[], int *count) {
-    if (*count >= MAX_CONTACTS) {
-        printf("Contact list is full!\n");
-        return;
-    }
+   * Find contact by ID or search.
+   * Modify the contact details (e.g., update phone number, email).
+   * Save the updated information.
 
-    printf("Enter contact name: ");
-    fgets(contacts[*count].name, MAX_NAME_LEN, stdin);
-    contacts[*count].name[strcspn(contacts[*count].name, "\n")] = '\0';  // Remove newline
+5. **Delete Contact**:
 
-    printf("Enter phone number: ");
-    fgets(contacts[*count].phone, MAX_PHONE_LEN, stdin);
-    contacts[*count].phone[strcspn(contacts[*count].phone, "\n")] = '\0';  // Remove newline
+   * Find and confirm the contact to delete.
+   * Remove the contact from the database.
 
-    printf("Enter email address: ");
-    fgets(contacts[*count].email, MAX_EMAIL_LEN, stdin);
-    contacts[*count].email[strcspn(contacts[*count].email, "\n")] = '\0';  // Remove newline
+6. **Search Contact**:
 
-    (*count)++;
-    printf("Contact added successfully!\n");
-}
+   * Search for contacts using parameters (Name, Phone, Email).
+   * Display matching contacts.
 
-// Function to view all contacts
-void viewContacts(Contact contacts[], int count) {
-    if (count == 0) {
-        printf("No contacts available.\n");
-        return;
-    }
+7. **Export/Import Contacts**:
 
-    printf("\nContacts List:\n");
-    for (int i = 0; i < count; i++) {
-        printf("Contact %d:\n", i + 1);
-        printf("Name: %s\n", contacts[i].name);
-        printf("Phone: %s\n", contacts[i].phone);
-        printf("Email: %s\n\n", contacts[i].email);
-    }
-}
+   * Export contacts to CSV or JSON format.
+   * Import contacts from a CSV/JSON file.
 
-// Function to edit a contact
-void editContact(Contact contacts[], int count) {
-    int index;
-    printf("Enter the contact number to edit (1 to %d): ", count);
-    scanf("%d", &index);
-    getchar();  // Consume the newline character
+8. **Sort Contacts**:
 
-    if (index < 1 || index > count) {
-        printf("Invalid contact number.\n");
-        return;
-    }
+   * Sort contacts alphabetically by name or by any other field.
 
-    index--;  // Adjust index to match the array (0-based)
+9. **Exit**:
 
-    printf("Editing Contact %d:\n", index + 1);
-    printf("Enter new name (leave empty to keep existing): ");
-    fgets(contacts[index].name, MAX_NAME_LEN, stdin);
-    if (contacts[index].name[0] != '\n') {
-        contacts[index].name[strcspn(contacts[index].name, "\n")] = '\0';  // Remove newline
-    }
+   * Save the current state and exit the system.
 
-    printf("Enter new phone number (leave empty to keep existing): ");
-    fgets(contacts[index].phone, MAX_PHONE_LEN, stdin);
-    if (contacts[index].phone[0] != '\n') {
-        contacts[index].phone[strcspn(contacts[index].phone, "\n")] = '\0';  // Remove newline
-    }
+---
 
-    printf("Enter new email address (leave empty to keep existing): ");
-    fgets(contacts[index].email, MAX_EMAIL_LEN, stdin);
-    if (contacts[index].email[0] != '\n') {
-        contacts[index].email[strcspn(contacts[index].email, "\n")] = '\0';  // Remove newline
-    }
+### Skills Used:
 
-    printf("Contact updated successfully!\n");
-}
+1. **Programming Languages**:
 
-// Function to delete a contact
-void deleteContact(Contact contacts[], int *count) {
-    int index;
-    printf("Enter the contact number to delete (1 to %d): ", *count);
-    scanf("%d", &index);
-    getchar();  // Consume the newline character
+   * Python, Java, C++, or JavaScript for backend implementation.
+   * HTML, CSS for frontend (if applicable).
 
-    if (index < 1 || index > *count) {
-        printf("Invalid contact number.\n");
-        return;
-    }
+2. **Data Structures**:
 
-    index--;  // Adjust index to match the array (0-based)
+   * Arrays, Lists, or Dictionaries to store contact data.
+   * Search algorithms (linear search, binary search) for finding contacts.
 
-    // Shift remaining contacts to delete the selected one
-    for (int i = index; i < *count - 1; i++) {
-        contacts[i] = contacts[i + 1];
-    }
+3. **Database Management**:
 
-    (*count)--;
-    printf("Contact deleted successfully!\n");
-}
+   * SQLite, MySQL, or MongoDB for data storage.
+   * Basic CRUD (Create, Read, Update, Delete) operations.
 
-// Function to save contacts to file
-void saveContactsToFile(Contact contacts[], int count) {
-    FILE *file = fopen(FILE_NAME, "w");
-    if (file == NULL) {
-        printf("Error opening file for saving contacts.\n");
-        return;
-    }
+4. **File Handling**:
 
-    for (int i = 0; i < count; i++) {
-        fprintf(file, "%s\n%s\n%s\n", contacts[i].name, contacts[i].phone, contacts[i].email);
-    }
+   * Reading and writing CSV, JSON, or XML files for data import/export.
 
-    fclose(file);
-}
+5. **Input Validation**:
 
-// Function to load contacts from file
-void loadContactsFromFile(Contact contacts[], int *count) {
-    FILE *file = fopen(FILE_NAME, "r");
-    if (file == NULL) {
-        printf("No previous contacts found, starting fresh.\n");
-        return;
-    }
+   * Regular expressions for validating email, phone numbers, etc.
 
-    while (fscanf(file, "%49[^\n]\n%14[^\n]\n%49[^\n]\n", contacts[*count].name, contacts[*count].phone, contacts[*count].email) == 3) {
-        (*count)++;
-    }
+6. **User Interface**:
 
-    fclose(file);
-}
-Footer
-© 2025 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
+   * Command-line interface (CLI) or GUI using frameworks like Tkinter (Python), Swing (Java), or React.js for web-based interfaces.
+
+7. **Error Handling**:
+
+   * Try-except blocks or error messages to handle invalid inputs or system failures.
+
+8. **Security**:
+
+   * Basic data encryption (optional) for sensitive contact details.
+   * Authentication for multi-user systems (optional).
