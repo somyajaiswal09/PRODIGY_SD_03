@@ -1,6 +1,6 @@
 
   
- Algorithm:
+ ### Algorithm:
 
 1. **Initialize System**:
 
